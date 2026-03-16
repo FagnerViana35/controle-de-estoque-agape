@@ -7,97 +7,617 @@
     }
   ],
   "raw-materials": [
-    { "id": "1773693600001", "name": "Margarina", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 15.09, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600002", "name": "Farinha de Trigo", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 2.89, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600003", "name": "Açúcar (1 kg)", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 3.89, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600004", "name": "Amido de Milho", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 5.0672, "created_at": "2026-03-16T00:00:00Z", "observation": "126,68 por 25kg" },
-    { "id": "1773693600005", "name": "Antimofo", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 50.55, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600006", "name": "Coco Ralado", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 13.57, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600007", "name": "Essência de Coco", "unit": "litro", "quantity_in_stock": 0, "unit_cost": 13.57, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600008", "name": "Canela", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 25.10, "created_at": "2026-03-16T00:00:00Z", "observation": "251,00 por 10kg" },
-    { "id": "1773693600009", "name": "Castanha", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 42.38, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600010", "name": "Doce de Leite (Balde)", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 18.4229, "created_at": "2026-03-16T00:00:00Z", "observation": "88,43 por 4,8kg" },
-    { "id": "1773693600011", "name": "Açúcar Confeiteiro", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 13.60, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600012", "name": "Goiabada (Sachê 2,5 kg)", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 16.384, "created_at": "2026-03-16T00:00:00Z", "observation": "40,96 por 2,5kg" },
-    { "id": "1773693600013", "name": "Embalagem pote 261", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 1.20, "created_at": "2026-03-16T00:00:00Z", "observation": "120,00 por 100un" },
-    { "id": "1773693600014", "name": "Embalagem pote 255", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 1.07, "created_at": "2026-03-16T00:00:00Z", "observation": "107,00 por 100un" },
-    { "id": "1773693600015", "name": "Etiqueta", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 0.28, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600016", "name": "Saco de Confeiteiro", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 0.6966, "created_at": "2026-03-16T00:00:00Z", "observation": "34,83 por 50un" },
-    { "id": "1773693600017", "name": "Papel Manteiga", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600018", "name": "Chocolate (2 kg)", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 26.8159, "created_at": "2026-03-16T00:00:00Z", "observation": "53,90 por 2,010kg" },
-    { "id": "1773693600019", "name": "Gás", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 125.00, "created_at": "2026-03-16T00:00:00Z", "observation": "250,00 por 2un" },
-    { "id": "1773693600020", "name": "Energia", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 2.50, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600021", "name": "Água", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 50.00, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600022", "name": "Luva (cx 100 unid.)", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 0.569, "created_at": "2026-03-16T00:00:00Z", "observation": "56,90 por 100un" },
-    { "id": "1773693600023", "name": "Nata líquida", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 27.69, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600024", "name": "Leite de Coco (caixa maior)", "unit": "unidade", "quantity_in_stock": 0, "unit_cost": 27.69, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "1773693600025", "name": "Coco Fino (10 kg)", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 25.999, "created_at": "2026-03-16T00:00:00Z", "observation": "259,99 por 10kg" },
-    { "id": "1773693600026", "name": "Nata em pó", "unit": "kg", "quantity_in_stock": 0, "unit_cost": 15.0, "created_at": "2026-03-16T00:00:00Z" }
+    {
+      "id": "1773693600001",
+      "name": "Margarina",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 15.09,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600002",
+      "name": "Farinha de Trigo",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 2.89,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600003",
+      "name": "Açúcar (1 kg)",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 3.89,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600004",
+      "name": "Amido de Milho",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 5.0672,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "126,68 por 25kg"
+    },
+    {
+      "id": "1773693600005",
+      "name": "Antimofo",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 50.55,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600006",
+      "name": "Coco Ralado",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 13.57,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600007",
+      "name": "Essência de Coco",
+      "unit": "litro",
+      "quantity_in_stock": 0,
+      "unit_cost": 13.57,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600008",
+      "name": "Canela",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 25.1,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "251,00 por 10kg"
+    },
+    {
+      "id": "1773693600009",
+      "name": "Castanha",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 42.38,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600010",
+      "name": "Doce de Leite (Balde)",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 18.4229,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "88,43 por 4,8kg"
+    },
+    {
+      "id": "1773693600011",
+      "name": "Açúcar Confeiteiro",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 13.6,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600012",
+      "name": "Goiabada (Sachê 2,5 kg)",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 16.384,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "40,96 por 2,5kg"
+    },
+    {
+      "id": "1773693600013",
+      "name": "Embalagem pote 261",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 1.2,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "120,00 por 100un"
+    },
+    {
+      "id": "1773693600014",
+      "name": "Embalagem pote 255",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 1.07,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "107,00 por 100un"
+    },
+    {
+      "id": "1773693600015",
+      "name": "Etiqueta",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 0.28,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600016",
+      "name": "Saco de Confeiteiro",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 0.6966,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "34,83 por 50un"
+    },
+    {
+      "id": "1773693600017",
+      "name": "Papel Manteiga",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600018",
+      "name": "Chocolate (2 kg)",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 26.8159,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "53,90 por 2,010kg"
+    },
+    {
+      "id": "1773693600019",
+      "name": "Gás",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 125,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "250,00 por 2un"
+    },
+    {
+      "id": "1773693600020",
+      "name": "Energia",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 2.5,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600021",
+      "name": "Água",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 50,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600022",
+      "name": "Luva (cx 100 unid.)",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 0.569,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "56,90 por 100un"
+    },
+    {
+      "id": "1773693600023",
+      "name": "Nata líquida",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 27.69,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600024",
+      "name": "Leite de Coco (caixa maior)",
+      "unit": "unidade",
+      "quantity_in_stock": 0,
+      "unit_cost": 27.69,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "1773693600025",
+      "name": "Coco Fino (10 kg)",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 25.999,
+      "created_at": "2026-03-16T00:00:00Z",
+      "observation": "259,99 por 10kg"
+    },
+    {
+      "id": "1773693600026",
+      "name": "Nata em pó",
+      "unit": "kg",
+      "quantity_in_stock": 0,
+      "unit_cost": 15,
+      "created_at": "2026-03-16T00:00:00Z"
+    }
   ],
   "products": [
-    { "id": "prod_1", "name": "Amanteigado Tradicional", "description": "Biscoito amanteigado clássico", "price": 8.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "prod_2", "name": "Amanteigado de Nata", "description": "Biscoito amanteigado sabor nata", "price": 10.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "prod_3", "name": "Amanteigado de Castanha de Caju", "description": "Biscoito amanteigado com castanha de caju", "price": 10.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "prod_4", "name": "Amanteigado de Coco", "description": "Biscoito amanteigado com coco ralado", "price": 8.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "prod_5", "name": "Amanteigado de Canela", "description": "Biscoito amanteigado sabor canela", "price": 8.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "prod_6", "name": "Casadinho de Doce de Leite", "description": "Biscoito amanteigado recheado com doce de leite", "price": 12.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "prod_7", "name": "Biscoito de Chocolate", "description": "Biscoito amanteigado sabor chocolate", "price": 9.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" },
-    { "id": "prod_8", "name": "Beliscão de Goiabada", "description": "Biscoito amanteigado com goiabada", "price": 9.99, "stock_quantity": 0, "created_at": "2026-03-16T00:00:00Z" }
+    {
+      "id": "prod_1",
+      "name": "Amanteigado Tradicional",
+      "description": "Biscoito amanteigado clássico",
+      "price": 8.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "prod_2",
+      "name": "Amanteigado de Nata",
+      "description": "Biscoito amanteigado sabor nata",
+      "price": 10.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "prod_3",
+      "name": "Amanteigado de Castanha de Caju",
+      "description": "Biscoito amanteigado com castanha de caju",
+      "price": 10.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "prod_4",
+      "name": "Amanteigado de Coco",
+      "description": "Biscoito amanteigado com coco ralado",
+      "price": 8.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "prod_5",
+      "name": "Amanteigado de Canela",
+      "description": "Biscoito amanteigado sabor canela",
+      "price": 8.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "prod_6",
+      "name": "Casadinho de Doce de Leite",
+      "description": "Biscoito amanteigado recheado com doce de leite",
+      "price": 12.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "prod_7",
+      "name": "Biscoito de Chocolate",
+      "description": "Biscoito amanteigado sabor chocolate",
+      "price": 9.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    },
+    {
+      "id": "prod_8",
+      "name": "Beliscão de Goiabada",
+      "description": "Biscoito amanteigado com goiabada",
+      "price": 9.99,
+      "stock_quantity": 0,
+      "created_at": "2026-03-16T00:00:00Z"
+    }
   ],
   "recipes": [
-    { "id": "r1_1", "product_id": "prod_1", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r1_2", "product_id": "prod_1", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r1_3", "product_id": "prod_1", "raw_material_id": "1773693600003", "quantity_required": 1.0 },
-    { "id": "r1_4", "product_id": "prod_1", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r1_5", "product_id": "prod_1", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r2_1", "product_id": "prod_2", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r2_2", "product_id": "prod_2", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r2_3", "product_id": "prod_2", "raw_material_id": "1773693600003", "quantity_required": 1.0 },
-    { "id": "r2_4", "product_id": "prod_2", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r2_5", "product_id": "prod_2", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r2_6", "product_id": "prod_2", "raw_material_id": "1773693600023", "quantity_required": 0.1926 },
-    { "id": "r2_7", "product_id": "prod_2", "raw_material_id": "1773693600026", "quantity_required": 0.006 },
-    { "id": "r3_1", "product_id": "prod_3", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r3_2", "product_id": "prod_3", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r3_3", "product_id": "prod_3", "raw_material_id": "1773693600003", "quantity_required": 1.0 },
-    { "id": "r3_4", "product_id": "prod_3", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r3_5", "product_id": "prod_3", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r3_6", "product_id": "prod_3", "raw_material_id": "1773693600009", "quantity_required": 0.3303 },
-    { "id": "r4_1", "product_id": "prod_4", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r4_2", "product_id": "prod_4", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r4_3", "product_id": "prod_4", "raw_material_id": "1773693600003", "quantity_required": 2.0 },
-    { "id": "r4_4", "product_id": "prod_4", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r4_5", "product_id": "prod_4", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r4_6", "product_id": "prod_4", "raw_material_id": "1773693600006", "quantity_required": 0.7716 },
-    { "id": "r5_1", "product_id": "prod_5", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r5_2", "product_id": "prod_5", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r5_3", "product_id": "prod_5", "raw_material_id": "1773693600003", "quantity_required": 2.0 },
-    { "id": "r5_4", "product_id": "prod_5", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r5_5", "product_id": "prod_5", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r5_6", "product_id": "prod_5", "raw_material_id": "1773693600008", "quantity_required": 0.4171 },
-    { "id": "r6_1", "product_id": "prod_6", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r6_2", "product_id": "prod_6", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r6_3", "product_id": "prod_6", "raw_material_id": "1773693600003", "quantity_required": 2.0 },
-    { "id": "r6_4", "product_id": "prod_6", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r6_5", "product_id": "prod_6", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r6_6", "product_id": "prod_6", "raw_material_id": "1773693600010", "quantity_required": 4.8 },
-    { "id": "r6_7", "product_id": "prod_6", "raw_material_id": "1773693600011", "quantity_required": 1.0 },
-    { "id": "r7_1", "product_id": "prod_7", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r7_2", "product_id": "prod_7", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r7_3", "product_id": "prod_7", "raw_material_id": "1773693600003", "quantity_required": 2.0 },
-    { "id": "r7_4", "product_id": "prod_7", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r7_5", "product_id": "prod_7", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r7_6", "product_id": "prod_7", "raw_material_id": "1773693600018", "quantity_required": 4.02 },
-    { "id": "r8_1", "product_id": "prod_8", "raw_material_id": "1773693600001", "quantity_required": 2.0 },
-    { "id": "r8_2", "product_id": "prod_8", "raw_material_id": "1773693600002", "quantity_required": 2.0 },
-    { "id": "r8_3", "product_id": "prod_8", "raw_material_id": "1773693600003", "quantity_required": 2.0 },
-    { "id": "r8_4", "product_id": "prod_8", "raw_material_id": "1773693600004", "quantity_required": 1.5 },
-    { "id": "r8_5", "product_id": "prod_8", "raw_material_id": "1773693600005", "quantity_required": 0.001 },
-    { "id": "r8_6", "product_id": "prod_8", "raw_material_id": "1773693600012", "quantity_required": 1.875 }
+    {
+      "id": "r1_1",
+      "product_id": "prod_1",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r1_2",
+      "product_id": "prod_1",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "id": "r1_3",
+      "product_id": "prod_1",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1
+    },
+    {
+      "id": "r1_4",
+      "product_id": "prod_1",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r1_5",
+      "product_id": "prod_1",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r2_1",
+      "product_id": "prod_2",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r2_2",
+      "product_id": "prod_2",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "id": "r2_3",
+      "product_id": "prod_2",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1
+    },
+    {
+      "id": "r2_4",
+      "product_id": "prod_2",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r2_5",
+      "product_id": "prod_2",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r2_6",
+      "product_id": "prod_2",
+      "raw_material_id": "1773693600023",
+      "quantity_required": 0.1926
+    },
+    {
+      "id": "r2_7",
+      "product_id": "prod_2",
+      "raw_material_id": "1773693600026",
+      "quantity_required": 0.006
+    },
+    {
+      "id": "r3_1",
+      "product_id": "prod_3",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r3_2",
+      "product_id": "prod_3",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "id": "r3_3",
+      "product_id": "prod_3",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1
+    },
+    {
+      "id": "r3_4",
+      "product_id": "prod_3",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r3_5",
+      "product_id": "prod_3",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r3_6",
+      "product_id": "prod_3",
+      "raw_material_id": "1773693600009",
+      "quantity_required": 0.3303
+    },
+    {
+      "id": "r4_1",
+      "product_id": "prod_4",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r4_2",
+      "product_id": "prod_4",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "id": "r4_3"
+    },
+    {
+      "id": "r4_4",
+      "product_id": "prod_4",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r4_5",
+      "product_id": "prod_4",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r4_6",
+      "product_id": "prod_4",
+      "raw_material_id": "1773693600006",
+      "quantity_required": 0.7716
+    },
+    {
+      "id": "r5_1",
+      "product_id": "prod_5",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r5_2",
+      "product_id": "prod_5",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "id": "r5_3"
+    },
+    {
+      "id": "r5_4",
+      "product_id": "prod_5",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r5_5",
+      "product_id": "prod_5",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r5_6",
+      "product_id": "prod_5",
+      "raw_material_id": "1773693600008",
+      "quantity_required": 0.4171
+    },
+    {
+      "id": "r6_1",
+      "product_id": "prod_6",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r6_2",
+      "product_id": "prod_6",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "id": "r6_3"
+    },
+    {
+      "id": "r6_4",
+      "product_id": "prod_6",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r6_5",
+      "product_id": "prod_6",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r6_6",
+      "product_id": "prod_6",
+      "raw_material_id": "1773693600010",
+      "quantity_required": 4.8
+    },
+    {
+      "id": "r6_7",
+      "product_id": "prod_6",
+      "raw_material_id": "1773693600011",
+      "quantity_required": 1
+    },
+    {
+      "id": "r7_1",
+      "product_id": "prod_7",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r7_2",
+      "product_id": "prod_7",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "id": "r7_3"
+    },
+    {
+      "id": "r7_4",
+      "product_id": "prod_7",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r7_5",
+      "product_id": "prod_7",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r7_6",
+      "product_id": "prod_7",
+      "raw_material_id": "1773693600018",
+      "quantity_required": 4.02
+    },
+    {
+      "id": "r8_1",
+      "product_id": "prod_8",
+      "raw_material_id": "1773693600001",
+      "quantity_required": 2
+    },
+    {
+      "id": "r8_2",
+      "product_id": "prod_8",
+      "raw_material_id": "1773693600002",
+      "quantity_required": 2
+    },
+    {
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "id": "r8_3"
+    },
+    {
+      "id": "r8_4",
+      "product_id": "prod_8",
+      "raw_material_id": "1773693600004",
+      "quantity_required": 1.5
+    },
+    {
+      "id": "r8_5",
+      "product_id": "prod_8",
+      "raw_material_id": "1773693600005",
+      "quantity_required": 0.001
+    },
+    {
+      "id": "r8_6",
+      "product_id": "prod_8",
+      "raw_material_id": "1773693600012",
+      "quantity_required": 1.875
+    },
+    {
+      "id": "1773701152866",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "product_id": "prod_4"
+    },
+    {
+      "id": "1773701201106",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "product_id": "prod_5"
+    },
+    {
+      "id": "1773701261298",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "product_id": "prod_6"
+    },
+    {
+      "id": "1773701273625",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "product_id": "prod_7"
+    },
+    {
+      "id": "1773701282970",
+      "raw_material_id": "1773693600003",
+      "quantity_required": 1,
+      "product_id": "prod_8"
+    }
   ],
   "customers": [],
   "production": [],
   "stock-movements": [],
   "sales": [],
-  "sale-items": []
+  "sale-items": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }

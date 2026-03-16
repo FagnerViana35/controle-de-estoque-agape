@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Plus, Trash2, Save } from 'lucide-react';
+import { Plus, Trash2, Save, Edit, X } from 'lucide-react';
 
 const Recipes = () => {
   const [products, setProducts] = useState([]);
@@ -8,6 +8,11 @@ const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [formData, setFormData] = useState({
+    raw_material_id: '',
+    quantity_required: 0
+  });
+  const [editingId, setEditingId] = useState(null);
+  const [editFormData, setEditFormData] = useState({
     raw_material_id: '',
     quantity_required: 0
   });
@@ -39,6 +44,14 @@ const Recipes = () => {
     });
   };
 
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData({
+      ...editFormData,
+      [name]: name === 'quantity_required' ? parseFloat(value) : value
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!selectedProduct) {
@@ -65,6 +78,30 @@ const Recipes = () => {
     } catch (error) {
       console.error('Erro ao excluir ingrediente:', error);
     }
+  };
+
+  const startEdit = (recipe) => {
+    setEditingId(recipe.id);
+    setEditFormData({
+      raw_material_id: recipe.raw_material_id,
+      quantity_required: recipe.quantity_required
+    });
+  };
+
+  const handleEdit = async (id) => {
+    try {
+      await api.put(`/recipes/${id}`, editFormData);
+      setEditingId(null);
+      setEditFormData({ raw_material_id: '', quantity_required: 0 });
+      fetchData();
+    } catch (error) {
+      console.error('Erro ao editar ingrediente:', error);
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditFormData({ raw_material_id: '', quantity_required: 0 });
   };
 
   const getMaterialName = (id) => {
@@ -140,13 +177,54 @@ const Recipes = () => {
             <tbody>
               {filteredRecipes.map(recipe => (
                 <tr key={recipe.id}>
-                  <td>{getMaterialName(recipe.raw_material_id)}</td>
-                  <td>{recipe.quantity_required}</td>
-                  <td>
-                    <button className="btn btn-danger" onClick={() => handleDelete(recipe.id)} style={{ padding: '5px' }}>
-                      <Trash2 size={16} />
-                    </button>
-                  </td>
+                  {editingId === recipe.id ? (
+                    <>
+                      <td>
+                        <select 
+                          name="raw_material_id"
+                          value={editFormData.raw_material_id}
+                          onChange={handleEditInputChange}
+                          style={{ width: '100%', padding: '5px' }}
+                        >
+                          <option value="">Selecione...</option>
+                          {materials.map(m => (
+                            <option key={m.id} value={m.id}>{m.name} ({m.unit})</option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
+                        <input 
+                          type="number"
+                          step="0.001"
+                          name="quantity_required"
+                          value={editFormData.quantity_required}
+                          onChange={handleEditInputChange}
+                          style={{ width: '100%', padding: '5px' }}
+                        />
+                      </td>
+                      <td style={{ display: 'flex', gap: '5px' }}>
+                        <button className="btn btn-success" onClick={() => handleEdit(recipe.id)} style={{ padding: '5px' }}>
+                          <Save size={16} />
+                        </button>
+                        <button className="btn btn-danger" onClick={cancelEdit} style={{ padding: '5px' }}>
+                          <X size={16} />
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{getMaterialName(recipe.raw_material_id)}</td>
+                      <td>{recipe.quantity_required}</td>
+                      <td style={{ display: 'flex', gap: '5px' }}>
+                        <button className="btn btn-warning" onClick={() => startEdit(recipe)} style={{ padding: '5px' }}>
+                          <Edit size={16} />
+                        </button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(recipe.id)} style={{ padding: '5px' }}>
+                          <Trash2 size={16} />
+                        </button>
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))}
               {filteredRecipes.length === 0 && (
