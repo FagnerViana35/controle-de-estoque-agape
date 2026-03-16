@@ -1,7 +1,8 @@
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 
-// Serve collections from the root db.json file.
+// Serve collections from db.json.
+// This function is designed to work in both local dev and Vercel production.
 // Usage examples:
 // - GET /api/users
 // - GET /api/users?username=agape
@@ -10,7 +11,18 @@ import { join } from 'path';
 
 export default function handler(req, res) {
   try {
-    const dbPath = join(process.cwd(), 'frontend', 'db.json');
+    // Ensure we find db.json regardless of whether Vercel root is the repo root or frontend folder.
+    const possibleDbPaths = [
+      join(process.cwd(), 'db.json'),
+      join(process.cwd(), 'frontend', 'db.json'),
+      join(process.cwd(), '..', 'db.json'),
+    ];
+
+    const dbPath = possibleDbPaths.find((p) => existsSync(p));
+    if (!dbPath) {
+      throw new Error(`db.json not found (checked: ${possibleDbPaths.join(', ')})`);
+    }
+
     const db = JSON.parse(readFileSync(dbPath, 'utf-8'));
 
     const { resource } = req.query;
