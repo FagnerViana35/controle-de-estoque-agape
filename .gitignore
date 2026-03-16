@@ -3,7 +3,9 @@ node_modules
 dist
 dist-ssr
 *.local
-db.json
+
+# json-server antigo (não usar mais)
+frontend/db.json
 
 # Vite cache
 frontend/node_modules/.vite

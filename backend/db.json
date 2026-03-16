@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin"
+    }
+  ],
+  "raw-materials": [],
+  "products": [],
+  "recipes": [],
+  "customers": [],
+  "production": [],
+  "stock-movements": [],
+  "sales": [],
+  "sale-items": []
+}
