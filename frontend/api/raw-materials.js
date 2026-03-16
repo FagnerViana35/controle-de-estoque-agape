@@ -8,6 +8,7 @@ export default async function handler(req, res) {
   // const data = await response.json();
 
   // For now, return static data (replace with your db.json content)
+  
   const data = {
     "raw-materials": [
       {
