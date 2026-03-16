@@ -10,7 +10,7 @@ import { join } from 'path';
 
 export default function handler(req, res) {
   try {
-    const dbPath = join(process.cwd(), '..', 'db.json');
+    const dbPath = join(process.cwd(), 'frontend', 'db.json');
     const db = JSON.parse(readFileSync(dbPath, 'utf-8'));
 
     const { resource } = req.query;

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "json-server --watch db.json --port 3001",
+    "server": "json-server --watch frontend/db.json --port 3001",
     "frontend": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run frontend\""
   },
