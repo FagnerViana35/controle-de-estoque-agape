@@ -253,7 +253,7 @@ const Sales = () => {
 
         <div style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
           <h3>Adicionar Produtos</h3>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-end' }}>
+          <div className="flex-row-mobile-stack" style={{ display: 'flex', gap: '10px', alignItems: 'flex-end' }}>
             <div className="form-group" style={{ flex: 2 }}>
               <label>Produto</label>
               <select 
