@@ -4,3 +4,6 @@ dist
 dist-ssr
 *.local
 db.json
+
+# Vite cache
+frontend/node_modules/.vite
