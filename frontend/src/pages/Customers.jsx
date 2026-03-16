@@ -141,35 +141,37 @@ const Customers = () => {
 
       <div className="card">
         <h2>Lista de Clientes</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Telefone</th>
-              <th>Email</th>
-              <th>Endereço</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {customers.map(customer => (
-              <tr key={customer.id}>
-                <td>{customer.name}</td>
-                <td>{customer.phone}</td>
-                <td>{customer.email}</td>
-                <td>{customer.address}</td>
-                <td>
-                  <button className="btn btn-warning" onClick={() => handleEdit(customer)} style={{ marginRight: '5px', padding: '5px' }}>
-                    <Edit size={16} />
-                  </button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(customer.id)} style={{ padding: '5px' }}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
+        <div className="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {customers.map(customer => (
+                <tr key={customer.id}>
+                  <td>{customer.name}</td>
+                  <td>{customer.phone}</td>
+                  <td>{customer.email}</td>
+                  <td>{customer.address}</td>
+                  <td>
+                    <button className="btn btn-warning" onClick={() => handleEdit(customer)} style={{ marginRight: '5px', padding: '5px' }}>
+                      <Edit size={16} />
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(customer.id)} style={{ padding: '5px' }}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

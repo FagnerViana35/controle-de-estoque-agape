@@ -160,24 +160,26 @@ const Production = () => {
 
       <div className="card">
         <h2>Últimas Produções</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Produto</th>
-              <th>Quantidade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {productions.slice(0, 10).map(p => (
-              <tr key={p.id}>
-                <td>{new Date(p.production_date).toLocaleString()}</td>
-                <td>{getProductName(p.product_id)}</td>
-                <td>{p.quantity_produced}</td>
+        <div className="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {productions.slice(0, 10).map(p => (
+                <tr key={p.id}>
+                  <td>{new Date(p.production_date).toLocaleString()}</td>
+                  <td>{getProductName(p.product_id)}</td>
+                  <td>{p.quantity_produced}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

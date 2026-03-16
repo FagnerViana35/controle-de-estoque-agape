@@ -96,56 +96,60 @@ const Dashboard = () => {
 
       <div className="card" style={{ marginTop: '30px' }}>
         <h2><Cookie size={20} style={{ marginRight: '10px' }} /> Produtos Vendidos</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Produto</th>
-              <th>Total Vendido</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stats.soldProducts.map((p, index) => (
-              <tr key={index}>
-                <td>{p.name}</td>
-                <td>{p.quantity} un</td>
-              </tr>
-            ))}
-            {stats.soldProducts.length === 0 && (
+        <div className="table-responsive">
+          <table>
+            <thead>
               <tr>
-                <td colSpan="2" style={{ textAlign: 'center' }}>Nenhuma venda registrada.</td>
+                <th>Produto</th>
+                <th>Total Vendido</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {stats.soldProducts.map((p, index) => (
+                <tr key={index}>
+                  <td>{p.name}</td>
+                  <td>{p.quantity} un</td>
+                </tr>
+              ))}
+              {stats.soldProducts.length === 0 && (
+                <tr>
+                  <td colSpan="2" style={{ textAlign: 'center' }}>Nenhuma venda registrada.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="card" style={{ marginTop: '30px' }}>
         <h2><History size={20} style={{ marginRight: '10px' }} /> Últimas Movimentações</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Tipo</th>
-              <th>Quantidade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stats.recentMovements.map(mov => (
-              <tr key={mov.id}>
-                <td>{new Date(mov.date).toLocaleDateString()}</td>
-                <td>{mov.type.toUpperCase()}</td>
-                <td style={{ color: mov.quantity > 0 ? 'green' : 'red', fontWeight: 'bold' }}>
-                  {mov.quantity > 0 ? `+${mov.quantity}` : mov.quantity}
-                </td>
-              </tr>
-            ))}
-            {stats.recentMovements.length === 0 && (
+        <div className="table-responsive">
+          <table>
+            <thead>
               <tr>
-                <td colSpan="3" style={{ textAlign: 'center' }}>Nenhuma movimentação recente.</td>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Quantidade</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {stats.recentMovements.map(mov => (
+                <tr key={mov.id}>
+                  <td>{new Date(mov.date).toLocaleDateString()}</td>
+                  <td>{mov.type.toUpperCase()}</td>
+                  <td style={{ color: mov.quantity > 0 ? 'green' : 'red', fontWeight: 'bold' }}>
+                    {mov.quantity > 0 ? `+${mov.quantity}` : mov.quantity}
+                  </td>
+                </tr>
+              ))}
+              {stats.recentMovements.length === 0 && (
+                <tr>
+                  <td colSpan="3" style={{ textAlign: 'center' }}>Nenhuma movimentação recente.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

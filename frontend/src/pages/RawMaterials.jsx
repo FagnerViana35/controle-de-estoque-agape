@@ -150,37 +150,39 @@ const RawMaterials = () => {
 
       <div className="card">
         <h2>Lista de Matérias-Primas</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Unidade</th>
-              <th>Estoque</th>
-              <th>Custo Unit.</th>
-              <th>Total</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {materials.map(material => (
-              <tr key={material.id}>
-                <td>{material.name}</td>
-                <td>{material.unit}</td>
-                <td>{material.quantity_in_stock}</td>
-                <td>R$ {material.unit_cost.toFixed(2)}</td>
-                <td>R$ {(material.quantity_in_stock * material.unit_cost).toFixed(2)}</td>
-                <td>
-                  <button className="btn btn-warning" onClick={() => handleEdit(material)} style={{ marginRight: '5px', padding: '5px' }}>
-                    <Edit size={16} />
-                  </button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(material.id)} style={{ padding: '5px' }}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
+        <div className="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Unidade</th>
+                <th>Estoque</th>
+                <th>Custo Unit.</th>
+                <th>Total</th>
+                <th>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {materials.map(material => (
+                <tr key={material.id}>
+                  <td>{material.name}</td>
+                  <td>{material.unit}</td>
+                  <td>{material.quantity_in_stock}</td>
+                  <td>R$ {material.unit_cost.toFixed(2)}</td>
+                  <td>R$ {(material.quantity_in_stock * material.unit_cost).toFixed(2)}</td>
+                  <td>
+                    <button className="btn btn-warning" onClick={() => handleEdit(material)} style={{ marginRight: '5px', padding: '5px' }}>
+                      <Edit size={16} />
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(material.id)} style={{ padding: '5px' }}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

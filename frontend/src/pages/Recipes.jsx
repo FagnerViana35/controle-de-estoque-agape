@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Plus, Trash2, Save } from 'lucide-react';
+import { Plus, Trash2, Save, X, BookOpen } from 'lucide-react';
 
 const Recipes = () => {
+  const [recipes, setRecipes] = useState([]);
   const [products, setProducts] = useState([]);
   const [materials, setMaterials] = useState([]);
-  const [recipes, setRecipes] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [isAdding, setIsAdding] = useState(false);
+  
   const [formData, setFormData] = useState({
+    product_id: '',
     raw_material_id: '',
     quantity_required: 0
   });
@@ -18,14 +21,15 @@ const Recipes = () => {
 
   const fetchData = async () => {
     try {
-      const [prodRes, matRes, recRes] = await Promise.all([
+      const [recipesRes, productsRes, materialsRes] = await Promise.all([
+        api.get('/recipes'),
         api.get('/products'),
-        api.get('/raw-materials'),
-        api.get('/recipes')
+        api.get('/raw-materials')
       ]);
-      setProducts(prodRes.data);
-      setMaterials(matRes.data);
-      setRecipes(recRes.data);
+      setRecipes(recipesRes.data);
+      setProducts(productsRes.data);
+      setMaterials(materialsRes.data);
+      setLoading(false);
     } catch (error) {
       console.error('Erro ao buscar dados:', error);
     }
@@ -41,78 +45,76 @@ const Recipes = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedProduct) {
-      alert('Selecione um produto primeiro!');
-      return;
-    }
     try {
       await api.post('/recipes', {
         ...formData,
-        product_id: selectedProduct,
         id: String(Date.now())
       });
-      setFormData({ raw_material_id: '', quantity_required: 0 });
+      setFormData({ product_id: '', raw_material_id: '', quantity_required: 0 });
+      setIsAdding(false);
       fetchData();
     } catch (error) {
-      console.error('Erro ao adicionar ingrediente:', error);
+      console.error('Erro ao salvar receita:', error);
     }
   };
 
   const handleDelete = async (id) => {
-    try {
-      await api.delete(`/recipes/${id}`);
-      fetchData();
-    } catch (error) {
-      console.error('Erro ao excluir ingrediente:', error);
+    if (window.confirm('Remover este ingrediente da receita?')) {
+      try {
+        await api.delete(`/recipes/${id}`);
+        fetchData();
+      } catch (error) {
+        console.error('Erro ao excluir ingrediente:', error);
+      }
     }
   };
 
-  const getMaterialName = (id) => {
-    const mat = materials.find(m => m.id === id);
-    return mat ? `${mat.name} (${mat.unit})` : 'Desconhecido';
-  };
+  const getProductName = (id) => products.find(p => p.id === id)?.name || 'N/A';
+  const getMaterialName = (id) => materials.find(m => m.id === id)?.name || 'N/A';
+  const getMaterialUnit = (id) => materials.find(m => m.id === id)?.unit || '';
 
-  const filteredRecipes = recipes.filter(r => r.product_id === selectedProduct);
+  if (loading) return <div>Carregando...</div>;
+
+  // Agrupar receitas por produto
+  const groupedRecipes = products.map(product => {
+    return {
+      ...product,
+      ingredients: recipes.filter(r => r.product_id === product.id)
+    };
+  }).filter(p => p.ingredients.length > 0);
 
   return (
     <div>
       <div className="card">
-        <h2>Gestão de Receitas</h2>
-        <div className="form-group" style={{ marginTop: '20px' }}>
-          <label>Selecione o Produto</label>
-          <select 
-            value={selectedProduct} 
-            onChange={(e) => setSelectedProduct(e.target.value)}
-          >
-            <option value="">Selecione um produto...</option>
-            {products.map(p => (
-              <option key={p.id} value={p.id}>{p.name}</option>
-            ))}
-          </select>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2>Gestão de Receitas</h2>
+          <button className="btn btn-primary" onClick={() => setIsAdding(!isAdding)}>
+            {isAdding ? <X size={18} /> : <Plus size={18} />}
+            {isAdding ? 'Cancelar' : 'Adicionar Ingrediente'}
+          </button>
         </div>
 
-        {selectedProduct && (
-          <form onSubmit={handleSubmit} style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
-            <h3>Adicionar Ingrediente</h3>
+        {isAdding && (
+          <form onSubmit={handleSubmit} style={{ marginTop: '20px', border: '1px solid #ddd', padding: '20px', borderRadius: '8px' }}>
+            <div className="form-group">
+              <label>Produto</label>
+              <select name="product_id" value={formData.product_id} onChange={handleInputChange} required>
+                <option value="">Selecione um produto</option>
+                {products.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+              </select>
+            </div>
             <div className="form-group">
               <label>Matéria-Prima</label>
-              <select 
-                name="raw_material_id" 
-                value={formData.raw_material_id} 
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Selecione...</option>
-                {materials.map(m => (
-                  <option key={m.id} value={m.id}>{m.name} ({m.unit})</option>
-                ))}
+              <select name="raw_material_id" value={formData.raw_material_id} onChange={handleInputChange} required>
+                <option value="">Selecione um ingrediente</option>
+                {materials.map(m => <option key={m.id} value={m.id}>{m.name} ({m.unit})</option>)}
               </select>
             </div>
             <div className="form-group">
               <label>Quantidade Necessária</label>
               <input 
                 type="number" 
-                step="0.001" 
+                step="0.0001" 
                 name="quantity_required" 
                 value={formData.quantity_required} 
                 onChange={handleInputChange} 
@@ -120,44 +122,45 @@ const Recipes = () => {
               />
             </div>
             <button type="submit" className="btn btn-success">
-              <Plus size={18} /> Adicionar à Receita
+              <Save size={18} /> Salvar no Produto
             </button>
           </form>
         )}
       </div>
 
-      {selectedProduct && (
-        <div className="card">
-          <h2>Ingredientes da Receita</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Matéria-Prima</th>
-                <th>Quantidade Necessária</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredRecipes.map(recipe => (
-                <tr key={recipe.id}>
-                  <td>{getMaterialName(recipe.raw_material_id)}</td>
-                  <td>{recipe.quantity_required}</td>
-                  <td>
-                    <button className="btn btn-danger" onClick={() => handleDelete(recipe.id)} style={{ padding: '5px' }}>
-                      <Trash2 size={16} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              {filteredRecipes.length === 0 && (
+      {groupedRecipes.map(group => (
+        <div key={group.id} className="card">
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--primary)' }}>
+            <BookOpen size={20} /> {group.name}
+          </h3>
+          <div className="table-responsive">
+            <table>
+              <thead>
                 <tr>
-                  <td colSpan="3" style={{ textAlign: 'center' }}>Nenhum ingrediente cadastrado para este produto.</td>
+                  <th>Ingrediente</th>
+                  <th>Quantidade</th>
+                  <th>Unidade</th>
+                  <th>Ações</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {group.ingredients.map(ing => (
+                  <tr key={ing.id}>
+                    <td>{getMaterialName(ing.raw_material_id)}</td>
+                    <td>{ing.quantity_required}</td>
+                    <td>{getMaterialUnit(ing.raw_material_id)}</td>
+                    <td>
+                      <button className="btn btn-danger" onClick={() => handleDelete(ing.id)} style={{ padding: '5px' }}>
+                        <Trash2 size={16} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      )}
+      ))}
     </div>
   );
 };

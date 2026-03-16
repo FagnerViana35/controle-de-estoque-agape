@@ -147,37 +147,39 @@ const Products = () => {
 
       <div className="card">
         <h2>Lista de Produtos</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th>Preço</th>
-              <th>Estoque</th>
-              <th>Valor Total</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map(product => (
-              <tr key={product.id}>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td>R$ {product.price.toFixed(2)}</td>
-                <td>{product.stock_quantity}</td>
-                <td>R$ {(product.stock_quantity * product.price).toFixed(2)}</td>
-                <td>
-                  <button className="btn btn-warning" onClick={() => handleEdit(product)} style={{ marginRight: '5px', padding: '5px' }}>
-                    <Edit size={16} />
-                  </button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(product.id)} style={{ padding: '5px' }}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
+        <div className="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Valor Total</th>
+                <th>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products.map(product => (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>{product.description}</td>
+                  <td>R$ {product.price.toFixed(2)}</td>
+                  <td>{product.stock_quantity}</td>
+                  <td>R$ {(product.stock_quantity * product.price).toFixed(2)}</td>
+                  <td>
+                    <button className="btn btn-warning" onClick={() => handleEdit(product)} style={{ marginRight: '5px', padding: '5px' }}>
+                      <Edit size={16} />
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(product.id)} style={{ padding: '5px' }}>
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

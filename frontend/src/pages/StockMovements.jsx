@@ -44,37 +44,39 @@ const StockMovements = () => {
     <div>
       <div className="card">
         <h2>Histórico de Movimentações de Estoque</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Tipo</th>
-              <th>Item</th>
-              <th>Quantidade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {movements.map(mov => (
-              <tr key={mov.id}>
-                <td>{new Date(mov.date).toLocaleString()}</td>
-                <td>
-                  <span className={`badge ${mov.type.includes('entrada') || mov.type === 'ajuste (+)' ? 'text-success' : 'text-danger'}`}>
-                    {mov.type.toUpperCase()}
-                  </span>
-                </td>
-                <td>{getItemName(mov)}</td>
-                <td style={{ color: mov.quantity > 0 ? 'green' : 'red', fontWeight: 'bold' }}>
-                  {mov.quantity > 0 ? `+${mov.quantity}` : mov.quantity}
-                </td>
-              </tr>
-            ))}
-            {movements.length === 0 && (
+        <div className="table-responsive">
+          <table>
+            <thead>
               <tr>
-                <td colSpan="4" style={{ textAlign: 'center' }}>Nenhuma movimentação registrada.</td>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Item</th>
+                <th>Quantidade</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {movements.map(mov => (
+                <tr key={mov.id}>
+                  <td>{new Date(mov.date).toLocaleString()}</td>
+                  <td>
+                    <span className={`badge ${mov.type.includes('entrada') || mov.type === 'ajuste (+)' ? 'text-success' : 'text-danger'}`}>
+                      {mov.type.toUpperCase()}
+                    </span>
+                  </td>
+                  <td>{getItemName(mov)}</td>
+                  <td style={{ color: mov.quantity > 0 ? 'green' : 'red', fontWeight: 'bold' }}>
+                    {mov.quantity > 0 ? `+${mov.quantity}` : mov.quantity}
+                  </td>
+                </tr>
+              ))}
+              {movements.length === 0 && (
+                <tr>
+                  <td colSpan="4" style={{ textAlign: 'center' }}>Nenhuma movimentação registrada.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
