@@ -20,6 +20,7 @@ const Recipes = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  
 
   const fetchData = async () => {
     try {
