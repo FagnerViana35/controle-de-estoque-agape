@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { ShoppingCart, Plus, Trash2, Edit, Save, X } from 'lucide-react';
+import { ShoppingCart, Plus, Trash2, Edit, Save, X, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Sales = () => {
   const [customers, setCustomers] = useState([]);
@@ -8,7 +8,14 @@ const Sales = () => {
   const [recipes, setRecipes] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [sales, setSales] = useState([]);
+  const [saleItems, setSaleItems] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Estados para filtro e paginação do histórico
+  const [filterDate, setFilterDate] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 5;
 
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [cart, setCart] = useState([]);
@@ -23,22 +30,34 @@ const Sales = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage, filterDate]);
 
   const fetchData = async () => {
     try {
-      const [custRes, prodRes, saleRes, recRes, matRes] = await Promise.all([
+      let salesUrl = `/sales?_sort=-sale_date&_page=${currentPage}&_per_page=${itemsPerPage}`;
+      if (filterDate) {
+        salesUrl += `&sale_date_like=${filterDate}`;
+      }
+
+      const [custRes, prodRes, saleRes, recRes, matRes, itemRes] = await Promise.all([
         api.get('/customers'),
         api.get('/products'),
-        api.get('/sales?_sort=-sale_date'),
+        api.get(salesUrl),
         api.get('/recipes'),
-        api.get('/raw-materials')
+        api.get('/raw-materials'),
+        api.get('/sale-items')
       ]);
+      
       setCustomers(custRes.data);
       setProducts(prodRes.data);
-      setSales(saleRes.data);
+      
+      const salesData = saleRes.data;
+      setSales(salesData.data || (Array.isArray(salesData) ? salesData : []));
+      setTotalPages(salesData.pages || 1);
+
       setRecipes(recRes.data);
       setMaterials(matRes.data);
+      setSaleItems(itemRes.data);
       setLoading(false);
     } catch (error) {
       console.error('Erro ao buscar dados:', error);
@@ -252,11 +271,24 @@ const Sales = () => {
     setSelectedCustomer('');
     setIsEditing(false);
     setEditingSale(null);
+    setCurrentPage(1);
+    setFilterDate('');
   };
 
   const getCustomerName = (id) => {
     const c = customers.find(cust => cust.id === id);
     return c ? c.name : 'Desconhecido';
+  };
+
+  const getSaleItemsDetails = (saleId) => {
+    const items = saleItems.filter(item => String(item.sale_id) === String(saleId));
+    return items.map(item => {
+      const prod = products.find(p => p.id === item.product_id);
+      return {
+        ...item,
+        productName: prod ? prod.name : 'Produto Desconhecido'
+      };
+    });
   };
 
   if (loading) return <div>Carregando...</div>;
@@ -367,34 +399,112 @@ const Sales = () => {
       </div>
 
       <div className="card">
-        <h2>Histórico de Vendas</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Cliente</th>
-              <th>Valor Total</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sales.map(s => (
-              <tr key={s.id}>
-                <td>{new Date(s.sale_date).toLocaleString()}</td>
-                <td>{getCustomerName(s.customer_id)}</td>
-                <td>R$ {s.total_value.toFixed(2)}</td>
-                <td>
-                  <button className="btn btn-warning" onClick={() => editSale(s)} style={{ marginRight: '5px', padding: '5px' }}>
-                    <Edit size={16} />
-                  </button>
-                  <button className="btn btn-danger" onClick={() => deleteSale(s.id)} style={{ padding: '5px' }}>
-                    <Trash2 size={16} />
-                  </button>
-                </td>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', marginBottom: '20px' }}>
+          <h2>Histórico de Vendas</h2>
+          <div className="form-group" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Calendar size={18} color="#666" />
+            <input 
+              type="date" 
+              value={filterDate} 
+              onChange={(e) => {
+                setFilterDate(e.target.value);
+                setCurrentPage(1);
+              }}
+              style={{ padding: '5px', borderRadius: '4px', border: '1px solid #ddd' }}
+            />
+            {filterDate && (
+              <button 
+                className="btn btn-secondary" 
+                onClick={() => {
+                  setFilterDate('');
+                  setCurrentPage(1);
+                }}
+                style={{ padding: '5px 10px', minWidth: 'auto' }}
+              >
+                Limpar
+              </button>
+            )}
+          </div>
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Produtos</th>
+                <th>Valor Total</th>
+                <th>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sales.length > 0 ? (
+                sales.map(s => {
+                  const items = getSaleItemsDetails(s.id);
+                  return (
+                    <tr key={s.id}>
+                      <td>{new Date(s.sale_date).toLocaleString()}</td>
+                      <td>{getCustomerName(s.customer_id)}</td>
+                      <td>
+                        <div style={{ fontSize: '13px' }}>
+                          {items.map((item, idx) => (
+                            <div key={idx} style={{ marginBottom: '2px' }}>
+                              • {item.productName} ({item.quantity} un)
+                            </div>
+                          ))}
+                        </div>
+                      </td>
+                      <td>R$ {s.total_value.toFixed(2)}</td>
+                      <td>
+                        <div style={{ display: 'flex', gap: '5px' }}>
+                          <button className="btn btn-warning" onClick={() => editSale(s)} style={{ padding: '5px' }} title="Editar">
+                            <Edit size={16} />
+                          </button>
+                          <button className="btn btn-danger" onClick={() => deleteSale(s.id)} style={{ padding: '5px' }} title="Excluir">
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>
+                    Nenhuma venda encontrada {filterDate ? 'para esta data' : ''}.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Paginação do Histórico */}
+        {totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '15px', marginTop: '20px' }}>
+            <button 
+              className="btn btn-secondary" 
+              onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+              disabled={currentPage === 1}
+              style={{ minWidth: 'auto', padding: '8px' }}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            
+            <span style={{ fontWeight: 'bold' }}>
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <button 
+              className="btn btn-secondary" 
+              onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+              disabled={currentPage === totalPages}
+              style={{ minWidth: 'auto', padding: '8px' }}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
