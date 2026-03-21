@@ -45,7 +45,7 @@ export const recipeController = {
 export const customerController = {
   getAll: async (req, res) => {
     try {
-      const customers = await applyQueryParams(db('customers').select('*'), req);
+      const customers = await applyQueryParams(db('customers').select('*'), req, 'customers');
       res.json(customers);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -98,7 +98,7 @@ export const customerController = {
 export const productionController = {
   getAll: async (req, res) => {
     try {
-      const production = await applyQueryParams(db('production').select('*'), req);
+      const production = await applyQueryParams(db('production').select('*'), req, 'production');
       res.json(production);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -107,8 +107,37 @@ export const productionController = {
 
   create: async (req, res) => {
     try {
-      const [prod] = await db('production').insert(req.body).returning('*');
-      res.status(201).json(prod);
+      const { product_id, quantity_produced, production_date } = req.body;
+      
+      // Tentar encontrar uma produção existente para este produto
+      const existingProduction = await db('production')
+        .where({ product_id })
+        .first();
+
+      if (existingProduction) {
+        // Se já existe, acumula a quantidade
+        const [updatedProd] = await db('production')
+          .where({ id: existingProduction.id })
+          .update({
+            quantity_produced: Number(existingProduction.quantity_produced) + Number(quantity_produced),
+            production_date: production_date || new Date().toISOString()
+          })
+          .returning('*');
+        res.status(200).json(updatedProd);
+      } else {
+        // Se não existe, cria um novo registro
+        const [prod] = await db('production').insert(req.body).returning('*');
+        res.status(201).json(prod);
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  delete: async (req, res) => {
+    try {
+      await db('production').where({ id: req.params.id }).del();
+      res.status(204).send();
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -118,7 +147,7 @@ export const productionController = {
 export const movementController = {
   getAll: async (req, res) => {
     try {
-      const movements = await applyQueryParams(db('stock_movements').select('*'), req);
+      const movements = await applyQueryParams(db('stock_movements').select('*'), req, 'stock_movements');
       res.json(movements);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -138,7 +167,7 @@ export const movementController = {
 export const saleController = {
   getAll: async (req, res) => {
     try {
-      const sales = await applyQueryParams(db('sales').select('*'), req);
+      const sales = await applyQueryParams(db('sales').select('*'), req, 'sales');
       res.json(sales);
     } catch (error) {
       res.status(500).json({ error: error.message });

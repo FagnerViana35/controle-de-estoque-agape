@@ -49,7 +49,10 @@ const Sales = () => {
     if (!currentProduct.product_id) return alert('Selecione um produto.');
     const product = products.find(p => p.id === currentProduct.product_id);
     
-    if (product.stock_quantity < currentProduct.quantity) {
+    const quantity = Number(currentProduct.quantity);
+    if (isNaN(quantity) || quantity <= 0) return alert('Insira uma quantidade válida.');
+
+    if (Number(product.stock_quantity) < quantity) {
       return alert(`Estoque de produto insuficiente. Disponível: ${product.stock_quantity}`);
     }
 
@@ -57,14 +60,15 @@ const Sales = () => {
     if (existingItem) {
       setCart(cart.map(item => 
         item.product_id === currentProduct.product_id 
-          ? { ...item, quantity: item.quantity + currentProduct.quantity }
+          ? { ...item, quantity: Number(item.quantity) + quantity }
           : item
       ));
     } else {
       setCart([...cart, { 
-        ...currentProduct, 
+        product_id: product.id,
+        quantity: quantity,
         name: product.name, 
-        price: product.price 
+        price: Number(product.price) 
       }]);
     }
     setCurrentProduct({ product_id: '', quantity: 1 });
@@ -74,7 +78,12 @@ const Sales = () => {
     setCart(cart.filter((_, i) => i !== index));
   };
 
-  const totalValue = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  // Cálculo do valor total garantindo tipos numéricos
+  const totalValue = cart.reduce((sum, item) => {
+    const itemPrice = Number(item.price) || 0;
+    const itemQty = Number(item.quantity) || 0;
+    return sum + (itemPrice * itemQty);
+  }, 0);
 
   const handleSale = async (e) => {
     e.preventDefault();
@@ -82,55 +91,75 @@ const Sales = () => {
     if (cart.length === 0) return alert('O carrinho está vazio.');
 
     try {
+      setLoading(true);
+
+      // Validar estoque atualizado no servidor antes de processar
+      for (const item of cart) {
+        const prodRes = await api.get(`/products/${item.product_id}`);
+        const currentStock = Number(prodRes.data.stock_quantity);
+        if (currentStock < Number(item.quantity)) {
+          setLoading(false);
+          return alert(`Estoque insuficiente para ${item.name}. Disponível: ${currentStock}, Necessário: ${item.quantity}`);
+        }
+      }
+
       if (isEditing) {
-        // Se estiver editando, primeiro excluímos a venda antiga (e estornamos estoque)
-        await deleteSale(editingSale.id, false); // false para não dar o alert de sucesso
+        // Se estiver editando, excluímos a venda antiga e estornamos estoque silenciosamente
+        await deleteSale(editingSale.id, false); 
       }
 
       const saleId = String(Date.now());
       
-      // 1. Criar a venda
+      // 1. Criar a venda principal
       await api.post('/sales', {
         id: saleId,
         customer_id: selectedCustomer,
         sale_date: new Date().toISOString(),
-        total_value: totalValue
+        total_value: Number(totalValue)
       });
 
-      // 2. Processar cada item
+      // 2. Processar cada item do carrinho
       for (const item of cart) {
+        const itemQty = Number(item.quantity);
+        const itemPrice = Number(item.price);
+
         // Registrar item da venda
         await api.post('/sale-items', {
           id: String(Date.now() + Math.random()),
           sale_id: saleId,
           product_id: item.product_id,
-          quantity: item.quantity,
-          unit_price: item.price
+          quantity: itemQty,
+          unit_price: itemPrice
         });
 
-        // Baixar estoque do produto (Busca o valor mais atualizado do servidor)
+        // Baixar estoque do produto buscando valor real no servidor
         const prodRes = await api.get(`/products/${item.product_id}`);
         const currentProductData = prodRes.data;
+        const newStock = Math.max(0, Number(currentProductData.stock_quantity) - itemQty);
+        
         await api.patch(`/products/${item.product_id}`, {
-          stock_quantity: currentProductData.stock_quantity - item.quantity
+          stock_quantity: newStock
         });
 
-        // Registrar movimentação de estoque (produto)
+        // Registrar movimentação de estoque
         await api.post('/stock-movements', {
           id: String(Date.now() + Math.random()),
           type: 'venda (produto)',
           product_id: item.product_id,
-          quantity: -item.quantity,
+          quantity: -itemQty,
           date: new Date().toISOString()
         });
       }
 
       alert(isEditing ? 'Venda atualizada com sucesso!' : 'Venda realizada com sucesso!');
       resetForm();
-      fetchData();
+      await fetchData(); // Atualiza histórico e estoque na tela
     } catch (error) {
       console.error('Erro ao processar venda:', error);
-      alert('Erro ao processar venda.');
+      alert('Erro crítico ao processar venda. Verifique os logs.');
+      await fetchData();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -138,21 +167,24 @@ const Sales = () => {
     if (showAlert && !window.confirm('Tem certeza que deseja excluir esta venda? O estoque será estornado.')) return;
 
     try {
-      // 1. Buscar TODOS os itens de venda e filtrar manualmente para garantir precisão
+      if (showAlert) setLoading(true);
+
+      // 1. Buscar os itens específicos desta venda antes de deletar
       const itemsRes = await api.get('/sale-items');
-      const allSaleItems = itemsRes.data;
-      const saleItems = allSaleItems.filter(item => String(item.sale_id) === String(saleId));
+      const saleItems = itemsRes.data.filter(item => String(item.sale_id) === String(saleId));
 
-      console.log(`Estornando ${saleItems.length} itens da venda ${saleId}`);
+      // 2. Deletar a venda principal (impede processamento duplicado)
+      await api.delete(`/sales/${saleId}`);
 
+      // 3. Estornar estoque para cada item encontrado
       for (const item of saleItems) {
-        // Estornar estoque do produto (Busca o valor atualizado do servidor)
         try {
+          const itemQty = Number(item.quantity);
           const prodRes = await api.get(`/products/${item.product_id}`);
           const currentProductData = prodRes.data;
           
           if (currentProductData) {
-            const newStock = Number(currentProductData.stock_quantity) + Number(item.quantity);
+            const newStock = Number(currentProductData.stock_quantity) + itemQty;
             await api.patch(`/products/${item.product_id}`, {
               stock_quantity: newStock
             });
@@ -162,28 +194,28 @@ const Sales = () => {
               id: String(Date.now() + Math.random()),
               type: 'estorno de venda',
               product_id: item.product_id,
-              quantity: Number(item.quantity),
+              quantity: itemQty,
               date: new Date().toISOString()
             });
           }
-        } catch (prodErr) {
-          console.error(`Erro ao estornar produto ${item.product_id}:`, prodErr);
+          
+          // Deletar o item da venda após o estorno
+          await api.delete(`/sale-items/${item.id}`);
+        } catch (itemErr) {
+          console.error(`Erro ao estornar item ${item.id}:`, itemErr);
         }
-
-        // Deletar o item da venda
-        await api.delete(`/sale-items/${item.id}`);
       }
-
-      // 2. Deletar a venda principal
-      await api.delete(`/sales/${saleId}`);
       
       if (showAlert) {
         alert('Venda excluída e estoque estornado com sucesso!');
-        fetchData(); // Atualiza a lista e os estoques na tela
+        await fetchData();
       }
     } catch (error) {
       console.error('Erro ao excluir venda:', error);
-      if (showAlert) alert('Erro ao excluir venda. Verifique o console.');
+      if (showAlert) alert('Erro ao excluir venda. O histórico pode estar desatualizado.');
+      await fetchData();
+    } finally {
+      if (showAlert) setLoading(false);
     }
   };
 
@@ -271,7 +303,7 @@ const Sales = () => {
               <input 
                 type="number" 
                 value={currentProduct.quantity} 
-                onChange={(e) => setCurrentProduct({...currentProduct, quantity: parseInt(e.target.value)})}
+                onChange={(e) => setCurrentProduct({...currentProduct, quantity: e.target.value})}
                 min="1"
               />
             </div>
@@ -298,9 +330,9 @@ const Sales = () => {
                 {cart.map((item, index) => (
                   <tr key={index}>
                     <td>{item.name}</td>
-                    <td>R$ {item.price.toFixed(2)}</td>
+                    <td>R$ {Number(item.price).toFixed(2)}</td>
                     <td>{item.quantity}</td>
-                    <td>R$ {(item.price * item.quantity).toFixed(2)}</td>
+                    <td>R$ {(Number(item.price) * Number(item.quantity)).toFixed(2)}</td>
                     <td>
                       <button className="btn btn-danger" onClick={() => removeFromCart(index)} style={{ padding: '5px' }}>
                         <Trash2 size={16} />

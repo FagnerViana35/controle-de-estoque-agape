@@ -1,3 +1,5 @@
+import db from '../db/knex.js';
+
 // Helper function to handle JSON Server-like query params (sorting and pagination)
 export const applyQueryParams = async (queryBuilder, req, tableName) => {
   const { _sort, _per_page, _page } = req.query;
@@ -16,8 +18,11 @@ export const applyQueryParams = async (queryBuilder, req, tableName) => {
     const page = parseInt(_page) || 1;
     const offset = (page - 1) * limit;
 
-    // Get total count for metadata
-    const countResult = await queryBuilder.clone().count('* as total').first();
+    // Get total count for metadata - using a fresh query to avoid conflicts with select(*)
+    // If tableName is provided, use it, otherwise try to infer from queryBuilder (less reliable)
+    const countQuery = tableName ? db(tableName) : queryBuilder.clone().clearSelect().clearOrder();
+    const countResult = await countQuery.count('* as total').first();
+    
     const total = parseInt(countResult.total);
     const pages = Math.ceil(total / limit);
 

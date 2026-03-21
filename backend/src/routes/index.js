@@ -27,6 +27,7 @@ router.patch('/users/:id', userController.update);
 
 // Raw Materials
 router.get('/raw-materials', materialController.getAll);
+router.get('/raw-materials/:id', materialController.getById);
 router.post('/raw-materials', materialController.create);
 router.put('/raw-materials/:id', materialController.update);
 router.patch('/raw-materials/:id', materialController.patch);
@@ -55,6 +56,7 @@ router.delete('/customers/:id', customerController.delete);
 // Production
 router.get('/production', productionController.getAll);
 router.post('/production', productionController.create);
+router.delete('/production/:id', productionController.delete);
 
 // Stock Movements
 router.get('/stock-movements', movementController.getAll);

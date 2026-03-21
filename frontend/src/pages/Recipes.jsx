@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Plus, Trash2, Save, Edit, X } from 'lucide-react';
+import { Plus, Trash2, Save, Edit, X, Lock } from 'lucide-react';
 
 const Recipes = () => {
   const [products, setProducts] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  
   const [formData, setFormData] = useState({
     raw_material_id: '',
     quantity_required: 0
@@ -20,7 +23,16 @@ const Recipes = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Senha simples para acesso à gestão de receitas
+    if (password === '06112013') {
+      setIsAuthenticated(true);
+    } else {
+      alert('Senha incorreta!');
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -111,6 +123,31 @@ const Recipes = () => {
   };
 
   const filteredRecipes = recipes.filter(r => r.product_id === selectedProduct);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="card" style={{ maxWidth: '400px', margin: '100px auto', textAlign: 'center' }}>
+        <Lock size={48} color="var(--primary)" style={{ marginBottom: '20px' }} />
+        <h2>Acesso Restrito</h2>
+        <p>Insira a senha para gerenciar receitas</p>
+        <form onSubmit={handleLogin} style={{ marginTop: '20px' }}>
+          <div className="form-group">
+            <input 
+              type="password" 
+              placeholder="Senha de acesso" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)}
+              required 
+              style={{ textAlign: 'center' }}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+            Entrar na Gestão
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div>

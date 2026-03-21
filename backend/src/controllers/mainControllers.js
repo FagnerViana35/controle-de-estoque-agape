@@ -64,8 +64,18 @@ export const userController = {
 export const materialController = {
   getAll: async (req, res) => {
     try {
-      const materials = await applyQueryParams(db('raw_materials').select('*'), req);
+      const materials = await applyQueryParams(db('raw_materials').select('*'), req, 'raw_materials');
       res.json(materials);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  getById: async (req, res) => {
+    try {
+      const material = await db('raw_materials').where({ id: req.params.id }).first();
+      if (!material) return res.status(404).json({ error: 'Matéria-prima não encontrada' });
+      res.json(material);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -117,7 +127,7 @@ export const materialController = {
 export const productController = {
   getAll: async (req, res) => {
     try {
-      const products = await applyQueryParams(db('products').select('*'), req);
+      const products = await applyQueryParams(db('products').select('*'), req, 'products');
       res.json(products);
     } catch (error) {
       res.status(500).json({ error: error.message });

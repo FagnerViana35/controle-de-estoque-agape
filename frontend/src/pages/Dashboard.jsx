@@ -30,35 +30,38 @@ const Dashboard = () => {
       const today = new Date().toISOString().split('T')[0];
       const currentMonth = new Date().toISOString().slice(0, 7);
 
-      const salesToday = saleRes.data
+      const salesToday = (Array.isArray(saleRes.data) ? saleRes.data : saleRes.data.data || [])
         .filter(s => s.sale_date.startsWith(today))
-        .reduce((sum, s) => sum + s.total_value, 0);
+        .reduce((sum, s) => sum + Number(s.total_value), 0);
 
-      const salesMonth = saleRes.data
+      const salesMonth = (Array.isArray(saleRes.data) ? saleRes.data : saleRes.data.data || [])
         .filter(s => s.sale_date.startsWith(currentMonth))
-        .reduce((sum, s) => sum + s.total_value, 0);
+        .reduce((sum, s) => sum + Number(s.total_value), 0);
 
       // Agrupar produtos vendidos
       const soldMap = {};
-      itemRes.data.forEach(item => {
+      const allSaleItems = Array.isArray(itemRes.data) ? itemRes.data : itemRes.data.data || [];
+      const allProducts = Array.isArray(prodRes.data) ? prodRes.data : prodRes.data.data || [];
+
+      allSaleItems.forEach(item => {
         if (!soldMap[item.product_id]) {
-          const prod = prodRes.data.find(p => p.id === item.product_id);
+          const prod = allProducts.find(p => p.id === item.product_id);
           soldMap[item.product_id] = {
             name: prod ? prod.name : 'Desconhecido',
             quantity: 0
           };
         }
-        soldMap[item.product_id].quantity += item.quantity;
+        soldMap[item.product_id].quantity += Number(item.quantity);
       });
 
       const soldProducts = Object.values(soldMap).sort((a, b) => b.quantity - a.quantity);
 
       setStats({
-        totalRawMaterials: matRes.data.length,
-        totalProducts: prodRes.data.reduce((sum, p) => sum + p.stock_quantity, 0),
+        totalRawMaterials: Array.isArray(matRes.data) ? matRes.data.length : (matRes.data.items || 0),
+        totalProducts: allProducts.reduce((sum, p) => sum + Number(p.stock_quantity), 0),
         salesToday,
         salesMonth,
-        recentMovements: movRes.data.data || movRes.data, // JSON Server 1.0 returns { data, first, prev, next, last, pages, items } for paginated results
+        recentMovements: Array.isArray(movRes.data) ? movRes.data : (movRes.data.data || []),
         soldProducts
       });
       setLoading(false);
