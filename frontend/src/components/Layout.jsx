@@ -40,7 +40,7 @@ const Layout = () => {
       <nav className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo-area">
-            <h2>Agapé</h2>
+            <h2>Ágape</h2>
             <button className="close-sidebar-btn" onClick={closeSidebar}>
               <X size={24} />
             </button>
@@ -115,7 +115,7 @@ const Layout = () => {
           <button className="menu-toggle-btn" onClick={toggleSidebar}>
             <Menu size={24} />
           </button>
-          <h1 className="page-title">Agapé Delícias Caseiras</h1>
+          <h1 className="page-title">Ágape Delícias Caseiras</h1>
         </header>
         <div className="content-area">
           <Outlet />

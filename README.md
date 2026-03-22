@@ -1,4 +1,4 @@
-# Estoque Agapé
+# Estoque Ágape
 
 Sistema de controle de estoque (React/Vite) usando `json-server` como API.
 

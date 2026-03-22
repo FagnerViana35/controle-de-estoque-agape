@@ -42,7 +42,7 @@ const Login = () => {
           <div className="login-logo">
             <Cookie size={48} color="#2c3e50" />
           </div>
-          <h1>Agapé</h1>
+          <h1>Ágape</h1>
           <p>Delícias Caseiras</p>
         </div>
         
@@ -75,7 +75,7 @@ const Login = () => {
         </form>
         
         <div className="login-footer">
-          <p>&copy; 2026 Agapé Delícias Caseiras</p>
+          <p>&copy; 2026 Ágape Delícias Caseiras</p>
         </div>
       </div>
     </div>
